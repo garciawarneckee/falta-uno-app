@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "falta-uno",
+    "name": "falta-uno-app",
     "description": "Porque siempre está el que te abandona a último momento...",
-    "slug": "falta-uno",
+    "slug": "falta-uno-app",
     "privacy": "public",
     "sdkVersion": "24.0.0",
     "platforms": [
