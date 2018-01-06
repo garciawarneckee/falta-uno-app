@@ -2,8 +2,8 @@ import { Notifications } from 'expo';
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
 
-import MainTabNavigator from './MainTabNavigator';
-import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
+import MainTabNavigator from 'navigation/MainTabNavigator';
+import registerForPushNotificationsAsync from 'api/registerForPushNotificationsAsync';
 
 const RootStackNavigator = StackNavigator(
   {

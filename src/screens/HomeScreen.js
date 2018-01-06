@@ -8,9 +8,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { WebBrowser } from 'expo';
 
-import { MonoText } from '../components/StyledText';
+import Config from 'config'
+import { Facebook, WebBrowser } from 'expo';
+
+import { MonoText } from 'components/StyledText';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -25,8 +27,8 @@ export default class HomeScreen extends React.Component {
             <Image
               source={
                 __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
+                  ? require('assets/images/robot-dev.png')
+                  : require('assets/images/robot-prod.png')
               }
               style={styles.welcomeImage}
             />
@@ -53,12 +55,8 @@ export default class HomeScreen extends React.Component {
           </View>
         </ScrollView>
 
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
+        <View onPress={Facebook.logInWithReadPermissionsAsync(Config.facebook.appId)}>
+          <Text>Facebook</Text>
         </View>
       </View>
     );
