@@ -1,6 +1,7 @@
 const tintColor = '#2f95dc';
 
 export default {
+  // boilerplate
   tintColor,
   tabIconDefault: '#ccc',
   tabIconSelected: tintColor,
@@ -11,4 +12,10 @@ export default {
   warningText: '#666804',
   noticeBackground: tintColor,
   noticeText: '#fff',
+
+  // Propios
+  facebook: '#3B5998',
+  white: '#fff',
+  success: '#5cb85c',
+  danger: '#d9534f'
 };

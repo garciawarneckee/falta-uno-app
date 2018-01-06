@@ -1,31 +1,6 @@
 import React from 'react';
-import {
-  Alert,
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-
-import { Button } from 'react-native-elements';
-
-import Config from 'config'
-import { Facebook, WebBrowser } from 'expo';
-import * as Firebase from 'firebase';
-
-Firebase.initializeApp(Config.firebase);
-
-// Listen for authentication state to change.
-Firebase.auth().onAuthStateChanged((user) => {
-  if (user != null) {
-    Alert.alert("We are authenticated now!");
-  }
-
-  // Do other things
-});
+import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { WebBrowser } from 'expo';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -66,31 +41,8 @@ export default class HomeScreen extends React.Component {
             </TouchableOpacity>
           </View>
         </ScrollView>
-
-        <Button
-          onPress={this.logIn}
-          icon={{ name: 'facebook', type: 'material-community' }}
-          large
-          title="Registrarse con Facebook">
-        </Button>
       </View>
     );
-  }
-
-  async logIn() {
-    const { type, token } = await Facebook.logInWithReadPermissionsAsync(Config.facebook.appId);
-    if (type === 'success') {
-
-      if (type === 'success') {
-        // Build Firebase credential with the Facebook access token.
-        const credential = Firebase.auth.FacebookAuthProvider.credential(token);
-    
-        // Sign in with credential from the Facebook user.
-        Firebase.auth().signInWithCredential(credential).catch((error) => {
-          // Handle Errors here.
-        });
-      }
-    }
   }
 
   _maybeRenderDevelopmentModeWarning() {

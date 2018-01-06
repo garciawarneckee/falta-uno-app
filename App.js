@@ -1,15 +1,27 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import * as Firebase from 'firebase';
+
+import Config from 'config'
+
 import RootNavigation from 'navigation/RootNavigation';
+import LoginScreen from 'screens/LoginScreen';
 
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
+    loggedIn: false
   };
 
+  componentWillMount(){
+    // Inicializo Firebase
+    Firebase.initializeApp(Config.firebase);
+  }
+
   render() {
+    // Cargando
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
@@ -18,15 +30,14 @@ export default class App extends React.Component {
           onFinish={this._handleFinishLoading}
         />
       );
-    } else {
-      return (
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
-          <RootNavigation />
-        </View>
-      );
-    }
+    } 
+    return (
+      <View style={styles.container}>
+        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+        {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
+        {this.state.loggedIn ?  <RootNavigation /> : <LoginScreen />}
+      </View>
+    );
   }
 
   _loadResourcesAsync = async () => {
@@ -38,9 +49,10 @@ export default class App extends React.Component {
       Font.loadAsync({
         // This is the font that we are using for our tab bar
         ...Ionicons.font,
-        // We include SpaceMono because we use it in HomeScreen.js. Feel free
-        // to remove this if you are not using it in your app
-        'space-mono': require('assets/fonts/SpaceMono-Regular.ttf'),
+        ...FontAwesome.font,
+        // @shoutem/ui fonts
+        'Rubik-Regular': require('assets/fonts/Rubik-Regular.ttf'),
+        'rubicon-icon-font': require('assets/fonts/rubicon-icon-font.ttf'),
       }),
     ]);
   };
@@ -52,7 +64,15 @@ export default class App extends React.Component {
   };
 
   _handleFinishLoading = () => {
-    this.setState({ isLoadingComplete: true });
+    // Listen for authentication state to change.
+    Firebase.auth().onAuthStateChanged((user) => {
+      // Do other things
+      this.setState({ 
+        isLoadingComplete: true,
+        loggedIn: user != null
+      });
+    });
+    
   };
 }
 
