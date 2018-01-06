@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Alert,
   Image,
   Platform,
   ScrollView,
@@ -9,10 +10,22 @@ import {
   View,
 } from 'react-native';
 
+import { Button } from 'react-native-elements';
+
 import Config from 'config'
 import { Facebook, WebBrowser } from 'expo';
+import * as Firebase from 'firebase';
 
-import { MonoText } from 'components/StyledText';
+Firebase.initializeApp(Config.firebase);
+
+// Listen for authentication state to change.
+Firebase.auth().onAuthStateChanged((user) => {
+  if (user != null) {
+    Alert.alert("We are authenticated now!");
+  }
+
+  // Do other things
+});
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -40,7 +53,6 @@ export default class HomeScreen extends React.Component {
             <Text style={styles.getStartedText}>Get started by opening</Text>
 
             <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
             </View>
 
             <Text style={styles.getStartedText}>
@@ -55,11 +67,30 @@ export default class HomeScreen extends React.Component {
           </View>
         </ScrollView>
 
-        <View onPress={Facebook.logInWithReadPermissionsAsync(Config.facebook.appId)}>
-          <Text>Facebook</Text>
-        </View>
+        <Button
+          onPress={this.logIn}
+          icon={{ name: 'facebook', type: 'material-community' }}
+          large
+          title="Registrarse con Facebook">
+        </Button>
       </View>
     );
+  }
+
+  async logIn() {
+    const { type, token } = await Facebook.logInWithReadPermissionsAsync(Config.facebook.appId);
+    if (type === 'success') {
+
+      if (type === 'success') {
+        // Build Firebase credential with the Facebook access token.
+        const credential = Firebase.auth.FacebookAuthProvider.credential(token);
+    
+        // Sign in with credential from the Facebook user.
+        Firebase.auth().signInWithCredential(credential).catch((error) => {
+          // Handle Errors here.
+        });
+      }
+    }
   }
 
   _maybeRenderDevelopmentModeWarning() {
