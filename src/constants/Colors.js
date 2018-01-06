@@ -13,9 +13,12 @@ export default {
   noticeBackground: tintColor,
   noticeText: '#fff',
 
-  // Propios
+  // Redes sociales
   facebook: '#3B5998',
-  white: '#fff',
-  success: '#5cb85c',
-  danger: '#d9534f'
+
+  // Estados
+  success: 'yellowgreen', //'lightseagreen',
+  info: 'lightskyblue',//'deepskyblue',
+  warning: 'gold',
+  danger: 'indianred'
 };
