@@ -1,13 +1,11 @@
 import React from 'react';
-import { Button, Image, Screen, Text, View, Spinner, Row } from '@shoutem/ui';
-
+import { View, Image, StyleSheet } from 'react-native';
+import { Text, SocialIcon } from 'react-native-elements';
 import { Facebook } from 'expo';
-import { FontAwesome } from '@expo/vector-icons';
-
 import * as Firebase from 'firebase';
-import Color from 'constants/Colors';
+
+import Colors from 'constants/Colors';
 import Config from 'config'
-import { StyleSheet } from 'react-native';
 
 export default class LoginScreen extends React.Component {
   state = {
@@ -19,30 +17,36 @@ export default class LoginScreen extends React.Component {
 
   render() {
 
-    let errorMessage;
+    let toast;
     if (this.state.toast) {
-      errorMessage = <View styleName="flexible vertical v-end">
-        <View styleName="sm-gutter" style={{backgroundColor:Color[this.state.toastState]}}>
-          <Text style={css(styles.toast)}>{this.state.toastMsg}</Text>
-        </View>
+      toast = <View style={{ backgroundColor: Colors[this.state.toastState] }}>
+        <Text style={(styles.toast)}>{this.state.toastMsg}</Text>
       </View>
-    } else {
-      errorMessage = <View styleName="flexible vertical v-end"></View>
+    }
+
+    const buttonProps = {
+      title: "Ingresar con Facebook",
+      disabled: this.state.isLogging
+    }
+
+    if(this.state.isLogging){
+      buttonProps.title = "Ingresando...";
     }
 
     return (
-      <Screen>
-        <View styleName="flexible vertical v-end h-center" style={{ flex: 2 }}>
-          <Image styleName="medium-square" source={require('assets/images/icon.png')}></Image>
+      <View style={styles.flexible}>
+        <View style={[styles.end, styles.imageContainer]}>
+          <Image source={require('assets/images/icon.png')}></Image>
+          <Text h1 style={styles.title}>Falta Uno!</Text>
+          <Text h4>La app que no te deja tirado</Text>
         </View>
-        <View styleName="flexible vertical v-end">
-          <Button style={css(styles.buttonBg)} styleName="md-gutter" onPress={this.login}>
-            {this.state.isLogging ? <Text></Text> : <FontAwesome name="facebook" style={styles.buttonText}></FontAwesome>}
-            {this.state.isLogging ? <Spinner style={{ color: Color.white }} /> : <Text style={css(styles.buttonText)} styleName="sm-gutter-left">Ingresar con Facebook</Text>}
-          </Button>
+        <View style={[styles.flexible, styles.end]}>
+          <SocialIcon button type="facebook" onPress={this.login} {...buttonProps} />
         </View>
-        {errorMessage}
-      </Screen>
+        <View style={[styles.flexible, styles.end]}>
+          {toast}
+        </View>
+      </View>
     );
   }
 
@@ -50,28 +54,28 @@ export default class LoginScreen extends React.Component {
     this.setState({ isLogging: true });
     const { type, token } = await Facebook.logInWithReadPermissionsAsync(Config.facebook.appId);
     if (type === 'success') {
-      
-      this.setState({ 
-        toast: true, 
-        toastState: 'success',
-        toastMsg: "Ingresando..."
+
+      this.setState({
+        toast: true,
+        toastState: 'primary',
+        toastMsg: "¡Proceso completado con éxito!"
       });
 
       // Build Firebase credential with the Facebook access token.
       const credential = Firebase.auth.FacebookAuthProvider.credential(token);
       // Sign in with credential from the Facebook user.
-      Firebase.auth().signInWithCredential(credential).catch((error) => {
-        this.setState({ 
-          isLogging: false, 
-          toast: true, 
+      Firebase.auth().signInWithCredential(credential).catch(() => {
+        this.setState({
+          isLogging: false,
+          toast: true,
           toastState: 'danger',
           toastMsg: "Ocurrió un error al guardar la autorización.\nIntentá nuevamente más tarde"
         });
       });
-    } else if(type === 'cancel'){
-      this.setState({ 
-        isLogging: false, 
-        toast: true, 
+    } else if (type === 'cancel') {
+      this.setState({
+        isLogging: false,
+        toast: true,
         toastState: 'danger',
         toastMsg: "Cancelaste el proceso.\nPara ingresar tenés que autorizar la aplicación."
       });
@@ -79,17 +83,23 @@ export default class LoginScreen extends React.Component {
   }
 }
 
-const css = StyleSheet.flatten;
 const styles = StyleSheet.create({
-  buttonBg: {
-    backgroundColor: Color.facebook,
+  flexible: {
+    flex: 1
   },
-  buttonText: {
-    color: Color.white,
-    fontSize: 16,
+  title:{
+    marginTop: 20
   },
-  toast:{
-    color: Color.white, 
+  imageContainer: {
+    flex: 4, 
+    alignItems: 'center', 
+  },
+  end:{
+    justifyContent: 'flex-end'
+  },
+  toast: {
+    color: Colors.light,
+    margin: 10,
     textAlign: 'center'
   }
 });

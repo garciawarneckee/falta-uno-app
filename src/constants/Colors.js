@@ -1,5 +1,19 @@
 const tintColor = '#2f95dc';
 
+const theme = {
+  // Ionic name styles
+  primary: '#3cb371', //mediumseagreen
+  secondary: '#87cefa',//lightskyblue
+  danger: '#cd5c5c',//indianred
+  light: '#f4f4f4',
+  dark: '#222',
+  warning: '#ffd700', //gold
+}
+
+const social = {
+  facebook: '#3b5998',
+}
+
 export default {
   // boilerplate
   tintColor,
@@ -12,10 +26,6 @@ export default {
   warningText: '#666804',
   noticeBackground: tintColor,
   noticeText: '#fff',
-
-  // Propios
-  facebook: '#3B5998',
-  white: '#fff',
-  success: '#5cb85c',
-  danger: '#d9534f'
+  ... theme,
+  ... social,
 };
