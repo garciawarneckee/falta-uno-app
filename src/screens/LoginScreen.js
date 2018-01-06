@@ -57,7 +57,7 @@ export default class LoginScreen extends React.Component {
 
       this.setState({
         toast: true,
-        toastState: 'success',
+        toastState: 'primary',
         toastMsg: "¡Proceso completado con éxito!"
       });
 
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   toast: {
-    color: 'white',
+    color: Colors.light,
     margin: 10,
     textAlign: 'center'
   }
