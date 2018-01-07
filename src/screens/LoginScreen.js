@@ -6,6 +6,7 @@ import * as Firebase from 'firebase';
 
 import Colors from 'constants/Colors';
 import Config from 'config'
+import Lang from 'lang/main'
 
 export default class LoginScreen extends React.Component {
   state = {
@@ -25,20 +26,20 @@ export default class LoginScreen extends React.Component {
     }
 
     const buttonProps = {
-      title: "Ingresar con Facebook",
+      title: Lang.t('login.loginWithFacebook'),
       disabled: this.state.isLogging
     }
 
     if(this.state.isLogging){
-      buttonProps.title = "Ingresando...";
+      buttonProps.title = Lang.t('login.logging');
     }
 
     return (
       <View style={styles.flexible}>
         <View style={[styles.end, styles.imageContainer]}>
           <Image source={require('assets/images/icon.png')}></Image>
-          <Text h1 style={styles.title}>Falta Uno!</Text>
-          <Text h4>La app que no te deja tirado</Text>
+          <Text h1 style={styles.title}>{Lang.t('app.name')}</Text>
+          <Text h4>{Lang.t('app.slogan')}</Text>
         </View>
         <View style={[styles.flexible, styles.end]}>
           <SocialIcon button type="facebook" onPress={this.login} {...buttonProps} />
@@ -58,7 +59,7 @@ export default class LoginScreen extends React.Component {
       this.setState({
         toast: true,
         toastState: 'primary',
-        toastMsg: "¡Proceso completado con éxito!"
+        toastMsg: Lang.t('login.success')
       });
 
       // Build Firebase credential with the Facebook access token.
@@ -69,7 +70,7 @@ export default class LoginScreen extends React.Component {
           isLogging: false,
           toast: true,
           toastState: 'danger',
-          toastMsg: "Ocurrió un error al guardar la autorización.\nIntentá nuevamente más tarde"
+          toastMsg: Lang.t('login.error.auth')
         });
       });
     } else if (type === 'cancel') {
@@ -77,7 +78,7 @@ export default class LoginScreen extends React.Component {
         isLogging: false,
         toast: true,
         toastState: 'danger',
-        toastMsg: "Cancelaste el proceso.\nPara ingresar tenés que autorizar la aplicación."
+        toastMsg: Lang.t('login.error.user_cancelled')
       });
     }
   }

@@ -1,13 +1,28 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Image, Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import * as Firebase from 'firebase';
 
 import Config from 'config'
+import I18n from 'lang/main'
 
 import RootNavigation from 'navigation/RootNavigation';
 import LoginScreen from 'screens/LoginScreen';
+
+function cacheImages(images) {
+  return images.map(image => {
+    if (typeof image === 'string') {
+      return Image.prefetch(image);
+    } else {
+      return Asset.fromModule(image).downloadAsync();
+    }
+  });
+}
+
+function cacheFonts(fonts) {
+  return fonts.map(font => Font.loadAsync(font));
+}
 
 export default class App extends React.Component {
   state = {
@@ -41,19 +56,26 @@ export default class App extends React.Component {
   }
 
   _loadResourcesAsync = async () => {
+    // Fonts
+    const fontAssets = cacheFonts([
+      { ...Ionicons.font },
+      { ...FontAwesome.font },
+    ]);
+
+    // Images cache
+    const imageAssets = cacheImages([
+      require('assets/images/robot-dev.png'),
+      require('assets/images/robot-prod.png'),
+      require('assets/images/icon.png'),
+    ]);
+
+    // I18n
+    const langAssets = I18n.initAsync()
+
     return Promise.all([
-      Asset.loadAsync([
-        require('assets/images/robot-dev.png'),
-        require('assets/images/robot-prod.png'),
-      ]),
-      Font.loadAsync({
-        // This is the font that we are using for our tab bar
-        ...Ionicons.font,
-        ...FontAwesome.font,
-        // @shoutem/ui fonts
-        'Rubik-Regular': require('assets/fonts/Rubik-Regular.ttf'),
-        'rubicon-icon-font': require('assets/fonts/rubicon-icon-font.ttf'),
-      }),
+      ...fontAssets,
+      ...imageAssets,
+      ...langAssets,
     ]);
   };
 
