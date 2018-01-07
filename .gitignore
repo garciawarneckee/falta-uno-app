@@ -1,3 +1,7 @@
 node_modules/**/*
 .expo/**/*
 .vscode/.react
+
+src/config/development.js
+src/config/staging.js
+src/config/production.js
