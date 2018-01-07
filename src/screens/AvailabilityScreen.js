@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Lang from 'lang'
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, AsyncStorage, Alert } from 'react-native';
 import { List, ListItem, Slider } from 'react-native-elements';
 import Colors from 'constants/Colors';
-
+import * as Firebase from 'firebase';
 
 
 export default class AvailabilityScreen extends React.Component {
@@ -18,6 +18,26 @@ export default class AvailabilityScreen extends React.Component {
     distance: 15,
   }
 
+  constructor(props) {
+    super(props);
+    this.uid = Firebase.auth().currentUser.uid;;
+    this.db = Firebase.database()
+  }
+
+  componentWillMount() {
+    let that = this
+    this.db.ref(`users/${this.uid}`).on('value', (snapshot) => {
+      const userState = snapshot.val();
+      if (userState) {
+        that.setState(userState);
+      }
+    })
+  }
+
+  _updateUser(data){
+    this.db.ref(`users/${this.uid}`).set(data)
+  }
+
   render() {
     return <View>
       <List>
@@ -26,14 +46,14 @@ export default class AvailabilityScreen extends React.Component {
           hideChevron
           switchButton
           switched={this.state.available}
-          onSwitch={() => this.setState({ available: !this.state.available })}
+          onSwitch={() => this._updateUser({ available: !this.state.available })}
         />
         <ListItem
           title={Lang.t('availability.filterByDistance')}
           hideChevron
           switchButton
           switched={this.state.filterByDistance}
-          onSwitch={() => this.setState({ filterByDistance: !this.state.filterByDistance })}
+          onSwitch={() => this._updateUser({ filterByDistance: !this.state.filterByDistance })}
         />
         <ListItem
           disabled={!this.state.filterByDistance}
@@ -45,14 +65,13 @@ export default class AvailabilityScreen extends React.Component {
             minimumTrackTintColor={Colors.primaryLight}
             minimumValue={1}
             maximumValue={30}
-            onValueChange={(distance) => this.setState({ distance })}
+            onValueChange={(distance) => this._updateUser({ distance })}
             step={1}
             thumbTintColor={Colors.primary}
             value={this.state.distance}
           />}
         />
       </List>
-
     </View>
   }
 }
