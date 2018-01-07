@@ -4,44 +4,17 @@ import { WebBrowser } from 'expo';
 import Lang from 'lang';
 
 export default class SearchScreen extends React.Component {
-  static navigationOptions = {
-    header: null,
+  // Definimos de forma dinamica (funcion) para que el lenguaje este bien calculado (sino recae en ingles)
+  static navigationOptions = () => ({
     title: Lang.t('search.title'),
-  };
+    header: null,
+  });
 
   render() {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('assets/images/robot-dev.png')
-                  : require('assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
-
-          <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
-
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-            </View>
-
-            <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
-            </Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
+          <Text>{Lang.t('search.title')}</Text>
         </ScrollView>
       </View>
     );

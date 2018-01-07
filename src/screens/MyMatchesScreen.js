@@ -6,9 +6,9 @@ import Lang from 'lang'
 
 
 export default class MyMatchesScreen extends React.Component {
-  static navigationOptions = {
+  static navigationOptions = () => ({
     title: Lang.t('myMatches.title'),
-  };
+  });
 
   render() {
     return (
