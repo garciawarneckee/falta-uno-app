@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Lang from 'lang'
-import { View, StyleSheet, AsyncStorage, Alert } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { List, ListItem, Slider } from 'react-native-elements';
 import Colors from 'constants/Colors';
 import * as Firebase from 'firebase';
@@ -13,62 +13,72 @@ export default class AvailabilityScreen extends React.Component {
   });
 
   state = {
-    available: true,
-    filterByDistance: true,
-    distance: 15,
+    loading: true,
+    user: {
+      available: true,
+      filterByDistance: true,
+      distance: 15,
+    }
   }
 
   constructor(props) {
     super(props);
-    this.uid = Firebase.auth().currentUser.uid;;
-    this.db = Firebase.database()
+    const uid = Firebase.auth().currentUser.uid;
+    this.userRef = Firebase.database().ref(`users/${uid}`)
   }
 
-  componentWillMount() {
-    let that = this
-    this.db.ref(`users/${this.uid}`).on('value', (snapshot) => {
+  componentDidMount() {
+    this.userRef.on('value', (snapshot) => {
       const userState = snapshot.val();
       if (userState) {
-        that.setState(userState);
+        const newUserState = Object.assign({}, this.state.user, userState)
+        this.setState({ loading: false, user: newUserState })
       }
     })
   }
 
-  _updateUser(data){
-    this.db.ref(`users/${this.uid}`).set(data)
+  _updateUser(userState) {
+    const newUserState = Object.assign({}, this.state.user, userState)
+    this.userRef.set(newUserState)
   }
 
   render() {
+    if (this.state.loading) {
+      return <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" />
+      </View>
+    }
+
     return <View>
       <List>
         <ListItem
           title={Lang.t('availability.available')}
           hideChevron
           switchButton
-          switched={this.state.available}
-          onSwitch={() => this._updateUser({ available: !this.state.available })}
+          switched={this.state.user.available}
+          onSwitch={() => this._updateUser({ available: !this.state.user.available })}
         />
         <ListItem
           title={Lang.t('availability.filterByDistance')}
           hideChevron
           switchButton
-          switched={this.state.filterByDistance}
-          onSwitch={() => this._updateUser({ filterByDistance: !this.state.filterByDistance })}
+          switched={this.state.user.filterByDistance}
+          onSwitch={() => this._updateUser({ filterByDistance: !this.state.user.filterByDistance })}
         />
         <ListItem
-          disabled={!this.state.filterByDistance}
+          disabled={!this.state.user.filterByDistance}
           hideChevron
-          subtitle={Lang.t('availability.distance', { distance: this.state.distance })}
-          subtitleStyle={style.sliderLabel}
+          subtitle={Lang.t('availability.distance', { distance: this.state.user.distance })}
+          subtitleStyle={styles.sliderLabel}
           title={<Slider
-            disabled={!this.state.filterByDistance}
+            disabled={!this.state.user.filterByDistance}
             minimumTrackTintColor={Colors.primaryLight}
             minimumValue={1}
             maximumValue={30}
             onValueChange={(distance) => this._updateUser({ distance })}
             step={1}
             thumbTintColor={Colors.primary}
-            value={this.state.distance}
+            value={this.state.user.distance}
           />}
         />
       </List>
@@ -76,7 +86,11 @@ export default class AvailabilityScreen extends React.Component {
   }
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   sliderLabel: {
     color: Colors.muted,
     fontSize: 14,
