@@ -9,7 +9,7 @@ import Colors from 'constants/Colors';
 
 export default class AvailabilityScreen extends React.Component {
   static navigationOptions = () => ({
-    title: Lang.t('volunteer.title'),
+    title: Lang.t('availability.title'),
   });
 
   state = {
@@ -22,14 +22,14 @@ export default class AvailabilityScreen extends React.Component {
     return <View>
       <List>
         <ListItem
-          title={Lang.t('volunteer.available')}
+          title={Lang.t('availability.available')}
           hideChevron
           switchButton
           switched={this.state.available}
           onSwitch={() => this.setState({ available: !this.state.available })}
         />
         <ListItem
-          title={Lang.t('volunteer.filterByDistance')}
+          title={Lang.t('availability.filterByDistance')}
           hideChevron
           switchButton
           switched={this.state.filterByDistance}
@@ -38,7 +38,7 @@ export default class AvailabilityScreen extends React.Component {
         <ListItem
           disabled={!this.state.filterByDistance}
           hideChevron
-          subtitle={Lang.t('volunteer.distance', { distance: this.state.distance })}
+          subtitle={Lang.t('availability.distance', { distance: this.state.distance })}
           subtitleStyle={style.sliderLabel}
           title={<Slider
             disabled={!this.state.filterByDistance}

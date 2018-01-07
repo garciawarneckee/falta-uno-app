@@ -14,11 +14,11 @@ export default TabNavigator(
     Availability: {
       screen: AvailabilityScreen,
     },
-    MyMatches: {
-      screen: MyMatchesScreen,
-    },
     Search: {
       screen: SearchScreen,
+    },
+    MyMatches: {
+      screen: MyMatchesScreen,
     },
   },
   {
@@ -30,6 +30,7 @@ export default TabNavigator(
           case 'Availability':
             iconName =
               Platform.OS === 'ios' ? `ios-hand${focused ? '' : '-outline'}` : 'md-hand';
+            break;
           case 'Search':
             iconName =
               Platform.OS === 'ios'

@@ -18,7 +18,7 @@ export default {
   myMatches: {
     title: `Mis partidos`
   },
-  volunteer: {
+  availability: {
     title: `Disponibilidad`,
     available: `Estoy disponible para jugar`,
     filterByDistance: `Filtrar partidos por distancia`,
