@@ -19,6 +19,9 @@ export default {
     title: `Mis partidos`
   },
   volunteer: {
-    title: `Ofrecerme`
+    title: `Disponibilidad`,
+    available: `Estoy disponible para jugar`,
+    filterByDistance: `Filtrar partidos por distancia`,
+    distance: `Hasta {{distance}} km. a la redonda`
   }
 }
