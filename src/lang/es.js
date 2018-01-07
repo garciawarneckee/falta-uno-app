@@ -13,7 +13,8 @@ export default {
     success: `¡Proceso completado con éxito!`,
   },
   search: {
-    title: `Buscar`
+    title: `Buscar`,
+    placeholder: `Escribí para filtrar...`
   },
   myMatches: {
     title: `Mis partidos`
