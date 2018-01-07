@@ -6,7 +6,7 @@ import * as Firebase from 'firebase';
 
 import Colors from 'constants/Colors';
 import Config from 'config'
-import Lang from 'lang/main'
+import Lang from 'lang'
 
 export default class LoginScreen extends React.Component {
   state = {

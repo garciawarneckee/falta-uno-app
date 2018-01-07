@@ -5,7 +5,7 @@ import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import * as Firebase from 'firebase';
 
 import Config from 'config'
-import I18n from 'lang/main'
+import I18n from 'lang'
 
 import RootNavigation from 'navigation/RootNavigation';
 import LoginScreen from 'screens/LoginScreen';

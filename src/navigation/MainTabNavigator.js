@@ -5,20 +5,20 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Colors from 'constants/Colors';
 
-import HomeScreen from 'screens/HomeScreen';
-import MatchesScreen from 'screens/LinksScreen';
-import PlayersScreen from 'screens/SettingsScreen';
+import SearchScreen from 'screens/SearchScreen';
+import MyMatchesScreen from 'screens/MyMatchesScreen';
+import VolunteerScreen from 'screens/VolunteerScreen';
 
 export default TabNavigator(
   {
-    Home: {
-      screen: HomeScreen,
+    Search: {
+      screen: SearchScreen,
     },
-    Matches: {
-      screen: MatchesScreen,
+    MyMatches: {
+      screen: MyMatchesScreen,
     },
-    Players: {
-      screen: PlayersScreen,
+    Volunteer: {
+      screen: VolunteerScreen,
     },
   },
   {
@@ -27,18 +27,18 @@ export default TabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         switch (routeName) {
-          case 'Home':
+          case 'Search':
             iconName =
               Platform.OS === 'ios'
-                ? `ios-information-circle${focused ? '' : '-outline'}`
-                : 'md-information-circle';
+                ? `ios-search${focused ? '' : '-outline'}`
+                : 'md-search';
             break;
-          case 'Links':
-            iconName = Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link';
+          case 'MyMatches':
+            iconName = Platform.OS === 'ios' ? `ios-football${focused ? '' : '-outline'}` : 'md-football';
             break;
-          case 'Settings':
+          case 'Volunteer':
             iconName =
-              Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options';
+              Platform.OS === 'ios' ? `ios-hand${focused ? '' : '-outline'}` : 'md-hand';
         }
         return (
           <Ionicons

@@ -1,10 +1,12 @@
 import React from 'react';
 import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { WebBrowser } from 'expo';
+import Lang from 'lang';
 
-export default class HomeScreen extends React.Component {
+export default class SearchScreen extends React.Component {
   static navigationOptions = {
     header: null,
+    title: Lang.t('search.title'),
   };
 
   render() {
