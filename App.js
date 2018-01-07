@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Alert, Image, Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import * as Firebase from 'firebase';
@@ -82,7 +82,7 @@ export default class App extends React.Component {
   _handleLoadingError = error => {
     // In this case, you might want to report the error to your error
     // reporting service, for example Sentry
-    console.warn(error);
+    Alert.alert(error);
   };
 
   _handleFinishLoading = () => {
