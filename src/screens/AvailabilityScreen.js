@@ -1,13 +1,13 @@
 import React from 'react';
 
 import Lang from 'lang'
-import { View, Platform, StyleSheet } from 'react-native';
-import { List, ListItem, CheckBox, Divider, Slider, Text } from 'react-native-elements';
+import { View, StyleSheet } from 'react-native';
+import { List, ListItem, Slider } from 'react-native-elements';
 import Colors from 'constants/Colors';
 
 
 
-export default class VolunteerScreen extends React.Component {
+export default class AvailabilityScreen extends React.Component {
   static navigationOptions = () => ({
     title: Lang.t('volunteer.title'),
   });

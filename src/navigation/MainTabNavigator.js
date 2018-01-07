@@ -7,18 +7,18 @@ import Colors from 'constants/Colors';
 
 import SearchScreen from 'screens/SearchScreen';
 import MyMatchesScreen from 'screens/MyMatchesScreen';
-import VolunteerScreen from 'screens/VolunteerScreen';
+import AvailabilityScreen from 'screens/AvailabilityScreen';
 
 export default TabNavigator(
   {
-    Search: {
-      screen: SearchScreen,
+    Availability: {
+      screen: AvailabilityScreen,
     },
     MyMatches: {
       screen: MyMatchesScreen,
     },
-    Volunteer: {
-      screen: VolunteerScreen,
+    Search: {
+      screen: SearchScreen,
     },
   },
   {
