@@ -1,3 +1,6 @@
 node_modules/**/*
 .expo/**/*
 .vscode/.react
+
+src/config
+!src/config/index.js
