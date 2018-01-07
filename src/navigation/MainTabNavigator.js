@@ -5,20 +5,20 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Colors from 'constants/Colors';
 
+import AvailabilityScreen from 'screens/AvailabilityScreen';
 import SearchScreen from 'screens/SearchScreen';
 import MyMatchesScreen from 'screens/MyMatchesScreen';
-import VolunteerScreen from 'screens/VolunteerScreen';
 
 export default TabNavigator(
   {
+    Availability: {
+      screen: AvailabilityScreen,
+    },
     Search: {
       screen: SearchScreen,
     },
     MyMatches: {
       screen: MyMatchesScreen,
-    },
-    Volunteer: {
-      screen: VolunteerScreen,
     },
   },
   {
@@ -27,6 +27,10 @@ export default TabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         switch (routeName) {
+          case 'Availability':
+            iconName =
+              Platform.OS === 'ios' ? `ios-hand${focused ? '' : '-outline'}` : 'md-hand';
+            break;
           case 'Search':
             iconName =
               Platform.OS === 'ios'
@@ -36,9 +40,6 @@ export default TabNavigator(
           case 'MyMatches':
             iconName = Platform.OS === 'ios' ? `ios-football${focused ? '' : '-outline'}` : 'md-football';
             break;
-          case 'Volunteer':
-            iconName =
-              Platform.OS === 'ios' ? `ios-hand${focused ? '' : '-outline'}` : 'md-hand';
         }
         return (
           <Ionicons

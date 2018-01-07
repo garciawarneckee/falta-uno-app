@@ -13,12 +13,16 @@ export default {
     success: `¡Proceso completado con éxito!`,
   },
   search: {
-    title: `Buscar`
+    title: `Buscar`,
+    placeholder: `Escribí para filtrar...`
   },
   myMatches: {
     title: `Mis partidos`
   },
-  volunteer: {
-    title: `Ofrecerme`
+  availability: {
+    title: `Disponibilidad`,
+    available: `Estoy disponible para jugar`,
+    filterByDistance: `Filtrar partidos por distancia`,
+    distance: `Hasta {{distance}} km. a la redonda`
   }
 }

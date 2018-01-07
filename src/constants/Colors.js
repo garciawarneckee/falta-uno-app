@@ -5,9 +5,11 @@ const theme = {
   primary: '#3cb371', //mediumseagreen
   secondary: '#87cefa',//lightskyblue
   danger: '#cd5c5c',//indianred
+  primaryLight: '#9acd32',
   light: '#f4f4f4',
   dark: '#222',
   warning: '#ffd700', //gold
+  muted: '#999999'
 }
 
 const social = {

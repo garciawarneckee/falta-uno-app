@@ -18,7 +18,7 @@ export default {
   myMatches: {
     title: `My matches`
   },
-  volunteer: {
+  availability: {
     title: `Volunteer`
   }
 }
