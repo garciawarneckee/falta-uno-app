@@ -1,16 +1,19 @@
 {
   "expo": {
-    "name": "falta-uno-xde",
-    "description": "This project is really great.",
-    "slug": "falta-uno-xde",
+    "name": "falta-uno-app",
+    "description": "Porque siempre está el que te abandona a último momento...",
+    "slug": "falta-uno-app",
     "privacy": "public",
     "sdkVersion": "24.0.0",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
